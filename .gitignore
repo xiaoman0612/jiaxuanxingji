@@ -1,0 +1,15 @@
+# 系统与编辑器
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 本地验收产物（截图 / 日志 / 测试用浏览器配置）
+_build/qa/
+_build/*.log
+_build/profile-test/
+
+# 地图构建用的大体积原始数据（需要时用 _build/fetch.mjs 重新下载）
+_build/ne_*.geojson
+
+# 依赖
+node_modules/

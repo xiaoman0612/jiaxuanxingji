@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>稼轩行迹 · 辛弃疾行迹与词作水墨地图</title>
+<link rel="stylesheet" href="css/ink.css">
+</head>
+<body>
+
+<!-- 开卷 -->
+<div id="splash" class="splash">
+  <div class="splash-art"></div>
+  <div class="splash-veil"></div>
+  <div class="splash-inner">
+    <p class="splash-kicker">宋 · 绍兴十年 — 开禧三年</p>
+    <h1 class="splash-title">稼轩行迹</h1>
+    <p class="splash-sub">辛弃疾的行迹、词与山河</p>
+    <button class="ink-btn ink-btn-lg" id="btn-enter">展 卷</button>
+    <p class="splash-note">一幅可以点击的水墨地图 · 国风互动叙事</p>
+  </div>
+  <p class="splash-foot">中学语文课堂演示 · 地图为示意，不作精确地理参照</p>
+</div>
+
+<div class="app" id="app">
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-seal">稼<br>轩</div>
+      <div class="brand-text">
+        <h1>稼轩行迹</h1>
+        <p>辛弃疾行迹与词作 · 水墨互动地图</p>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <button class="ghost-btn" data-act="poem">词作赏析</button>
+      <button class="ghost-btn" data-act="guide">导览</button>
+      <button class="ghost-btn" data-act="fullscreen">全屏</button>
+    </div>
+  </header>
+
+  <main class="stage">
+    <section class="map-pane">
+      <div class="map-frame">
+        <svg id="map" viewBox="0 0 1000 720" role="img" aria-label="南宋时期辛弃疾行迹示意地图"></svg>
+      </div>
+      <p class="map-caption">示意图 · 非精确比例 · 点墨点，看他在这里做了什么</p>
+    </section>
+
+    <aside class="side-pane" id="side">
+      <div class="side-inner" id="side-inner"></div>
+    </aside>
+  </main>
+
+  <footer class="timeline-bar">
+    <div class="timeline-head">
+      <span class="timeline-title">编年</span>
+      <span class="timeline-hint">点年份，看那一年的他</span>
+    </div>
+    <div class="timeline-track" id="timeline"></div>
+  </footer>
+</div>
+
+<!-- 词作赏析 -->
+<div class="modal" id="modal-poem" hidden>
+  <div class="modal-mask" data-close="poem"></div>
+  <div class="modal-card poem-card">
+    <button class="modal-close" data-close="poem" aria-label="关闭">×</button>
+    <div class="poem-head">
+      <p class="poem-dynasty">宋 · 辛弃疾</p>
+      <h2>破阵子</h2>
+      <p class="poem-sub">为陈同甫赋壮词以寄之</p>
+    </div>
+    <div class="poem-body">
+      <div class="poem-lines" id="poem-lines"></div>
+      <div class="poem-notes">
+        <div class="poem-notes-head">
+          <span id="poem-note-title">全词</span>
+          <button class="mini-btn" id="btn-read">朗读全词</button>
+        </div>
+        <div id="poem-note-body" class="poem-note-body"></div>
+      </div>
+    </div>
+    <div class="poem-foot">
+      <span>课堂提示：点词句可看注释；"朗读"使用本机语音。</span>
+    </div>
+  </div>
+</div>
+
+<!-- 导览 -->
+<div class="modal" id="modal-guide" hidden>
+  <div class="modal-mask" data-close="guide"></div>
+  <div class="modal-card guide-card">
+    <button class="modal-close" data-close="guide" aria-label="关闭">×</button>
+    <h2>导览</h2>
+    <div class="guide-grid">
+      <div>
+        <h3>这幅图怎么用</h3>
+        <ol class="guide-list">
+          <li>图上的墨点，是辛弃疾一生中重要的地点。点击墨点，右侧展开此地的行迹。</li>
+          <li>点开"事件"，可以看到事件的前因后果。标有<span class="seal-inline">叙</span>的事件，可以进入互动叙事，以辛弃疾的第一人称走一遍当时情境。</li>
+          <li>底部的"编年"按年份串起他的一生，点年份即可定位。</li>
+          <li>"词作赏析"里有《破阵子》的逐句注释与朗读，可用于课堂讲解。</li>
+        </ol>
+      </div>
+      <div>
+        <h3>关于辛弃疾</h3>
+        <p>辛弃疾（1140—1207），字幼安，号稼轩，山东历城人。生于金人占领的中原，二十二岁聚众起义，南归后力主抗金，一生仕途起伏，闲居江西近二十年。存词六百余首，与苏轼并称"苏辛"。</p>
+        <h3>关于本图</h3>
+        <p>地图为教学示意图，地理位置经过简化与微调，不作精确地理参照。历史叙述以通行说法为准，个别年代、地点存在异说，课堂使用时可作讨论。</p>
+        <p class="guide-mini">键盘：空格/回车 推进对话，Esc 关闭弹窗。</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 互动叙事 -->
+<div class="rpg" id="rpg" hidden>
+  <div class="rpg-stage" id="rpg-stage">
+    <div class="rpg-bg" id="rpg-bg-a"></div>
+    <div class="rpg-bg" id="rpg-bg-b"></div>
+    <div class="rpg-wash"></div>
+    <div class="rpg-mist m1"></div>
+    <div class="rpg-mist m2"></div>
+    <div class="rpg-mist m3"></div>
+
+    <div class="rpg-hud">
+      <div class="rpg-chapter-flag" id="rpg-chapter-flag"></div>
+      <div class="rpg-hud-actions">
+        <button class="rpg-mini" data-rpg="history">回顾</button>
+        <button class="rpg-mini" data-rpg="restart">重看</button>
+        <button class="rpg-mini" data-rpg="exit">退出</button>
+      </div>
+    </div>
+
+    <div class="rpg-chapter-card" id="rpg-chapter-card" hidden>
+      <span class="chapter-no"></span>
+      <h2 class="chapter-name"></h2>
+      <span class="chapter-place"></span>
+    </div>
+
+    <div class="rpg-portrait" id="rpg-portrait">
+      <img alt="">
+      <div class="portrait-fade"></div>
+    </div>
+
+    <div class="rpg-poem-panel" id="rpg-poem-panel" hidden>
+      <div class="scroll-paper">
+        <p class="scroll-title">破阵子</p>
+        <p class="scroll-sub">为陈同甫赋壮词以寄之</p>
+        <div class="scroll-lines" id="scroll-lines"></div>
+        <p class="scroll-hint">点击继续</p>
+      </div>
+    </div>
+
+    <div class="rpg-dialog" id="rpg-dialog">
+      <div class="dialog-name" id="rpg-name">旁白</div>
+      <div class="dialog-text" id="rpg-text"></div>
+      <div class="dialog-next" id="rpg-next">▼</div>
+      <div class="dialog-hint">点击继续</div>
+    </div>
+
+    <div class="rpg-choices" id="rpg-choices" hidden></div>
+
+    <div class="rpg-ending" id="rpg-ending" hidden>
+      <div class="ending-card">
+        <div class="ending-seal">阅</div>
+        <h2>本段已阅</h2>
+        <p class="ending-line">醉里挑灯看剑，梦回吹角连营。</p>
+        <p class="ending-note" id="ending-note"></p>
+        <div class="ending-actions">
+          <button class="ink-btn" data-rpg="to-map">返回地图</button>
+          <button class="ink-btn ink-btn-ghost" data-rpg="to-poem">词作赏析</button>
+          <button class="ink-btn ink-btn-ghost" data-rpg="replay">再看一遍</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 回顾 -->
+<div class="rpg-log" id="rpg-log" hidden>
+  <div class="rpg-log-card">
+    <div class="rpg-log-head">
+      <h3>前情回顾</h3>
+      <button class="rpg-mini" data-rpg="close-history">收起</button>
+    </div>
+    <div class="rpg-log-body" id="rpg-log-body"></div>
+  </div>
+</div>
+
+<script src="js/map-geometry.js"></script>
+<script src="js/data.js"></script>
+<script src="js/map.js"></script>
+<script src="js/rpg.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
